@@ -1,0 +1,145 @@
+{% extends 'ecom/homebase.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <style media="screen">
+    
+    .button {
+      display: inline-block;
+      border-radius: 4px;
+      background-color: #f4511e;
+      border: none;
+      color: #FFFFFF;
+      text-align: center;
+      font-size: 28px;
+      padding: 20px;
+      width: auto;
+      transition: all 0.5s;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+    }
+    .quantity-controls input {
+      width: 50px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<br><br><br><br>
+
+<div class="container">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h6 style="text-align:center;" class="panel-title">My Cart</h6>
+    </div>
+    <table class="table table-hover" id="dev-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Description</th>
+          <th>Remove From Cart</th>
+        </tr>
+      </thead>
+
+      {% for item in items %}
+        <tr>
+          <td>{{ item.product.name }}</td>
+          <td><img src="{{item.product.product_image.url}}" height="40px" width="40px" /></td>
+          <td class="price">{{ item.product.price }}</td>
+          <td>
+            <div class="quantity-controls">
+              <input type="number" value="{{ item.quantity }}" data-product-id="{{ item.product.id }}" class="quantity-input" data-previous-value="{{ item.quantity }}">
+            </div>
+          </td>
+          <td class="subtotal">{{ item.subtotal }}</td>
+          <td>{{ item.product.description }}</td>
+          <td>
+            <a class="btn btn-danger btn-xs" href="{% url 'remove-from-cart' item.product.id  %}">
+              <span class="glyphicon glyphicon-trash"></span>
+            </a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" style="text-align: center;">
+            <h4>No products in cart</h4>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<br><br><br>
+<div style="text-align: center;">
+  <button class="button button2">Total: <span id="total">{{ total }}</span>$</button>
+  <a href="/customer-address"><button class="button"><span>Purchase</span></button></a>
+</div>
+
+<br><br><br><br><br>
+
+<script>
+  $(document).on('change', '.quantity-input', function() {
+    var productId = $(this).data('product-id');
+    var newQuantity = parseInt($(this).val()) || 0;
+    var previousQuantity = parseInt($(this).attr('data-previous-value')) || 0;
+
+    if (newQuantity >= 0) {
+      var quantityChange = newQuantity - previousQuantity;
+      updateQuantity(productId, quantityChange);
+
+      // Cập nhật subtotal
+      var price = parseFloat($(this).closest('tr').find('.price').text());
+      var subtotal = newQuantity * price;
+      $(this).closest('tr').find('.subtotal').text(subtotal.toFixed(2));
+
+      // Cập nhật tổng giỏ hàng
+      updateTotal();
+
+      $(this).attr('data-previous-value', newQuantity);
+    } else {
+      $(this).val(previousQuantity); // Reset lại nếu nhập không hợp lệ
+    }
+  });
+
+  function updateQuantity(productId, quantityChange) {
+    $.ajax({
+      url: "{% url 'update-cart-quantity' %}",
+      type: "POST",
+      data: {
+        product_id: productId,
+        quantity_change: quantityChange,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      success: function(response) {
+        // Cập nhật tổng giỏ hàng nếu có thay đổi
+        updateTotal();
+      },
+      error: function(xhr, status, error) {
+        console.log(error);
+      }
+    });
+  }
+
+  function updateTotal() {
+    var total = 0;
+    $('.subtotal').each(function() {
+      total += parseFloat($(this).text()) || 0;
+    });
+    $('#total').text(total.toFixed(2));
+  }
+</script>
+
+{% endblock content %}

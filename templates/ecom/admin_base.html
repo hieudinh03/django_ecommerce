@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <style type="text/css">
+    .bs-example {
+      margin: 0px;
+
+    }
+
+    .navbar-brand {
+      font-size: 20px;
+      font-family: sans-serif;
+
+    }
+
+        /*---------------------------------------
+           Social section
+        -----------------------------------------*/
+        footer {
+          padding: 0px 0px 0px 0px;
+          background-color: black;
+          margin: 0px;
+        }
+
+
+        #ftr {
+
+          padding: 20px;
+        }
+
+        .fa {
+
+          font-size: 23px;
+          width: 60px;
+          text-align: center;
+          text-decoration: none;
+          margin: 5px 2px;
+          border-radius: 50%;
+        }
+
+        .fa:hover {
+          opacity: 0.5;
+          text-decoration: none;
+        }
+
+        .fa-facebook {
+          background: #3B5998;
+          color: white;
+          margin-top: 30px;
+        }
+
+        .fa-whatsapp {
+          background: #25d366;
+          color: white;
+        }
+
+        .fa-twitter {
+          background: #55ACEE;
+          color: white;
+        }
+
+        .fa-instagram {
+          background: #125688;
+          color: white;
+        }
+
+        p {
+          text-align: center;
+
+        }
+
+  .custom-font-size{
+    font-size: 18px;
+  }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <div class="col-md-3 mb-2 mb-md-0">
+        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <svg class="bi" width="60" height="50" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+      </div>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 custom-font-size">
+        <li><a href="/" class="nav-link px-2 link-secondary">Ecommerce</a></li>
+        <li><a href="/view-customer" class="nav-link px-2">Customer</a></li>
+        <li><a href="/admin-view-booking" class="nav-link px-2">Booking</a></li>
+        <li><a href="/admin-products" class="nav-link px-2">Products</a></li>
+        <li><a href="/view-feedback" class="nav-link px-2">Feedback</a></li>
+      </ul>
+      <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-primary"><a href="/logout" class="text-warning">LOGOUT</a></button>
+      </div>
+    </header>
+  </div>
+
+
+  <!-- content start-->
+  {% block content %}
+
+  {% endblock content %}
+  <!-- content end-->
+<br><br><br><br><br><br><br><br>
+ 
+</body>
+</html>

@@ -1,0 +1,143 @@
+<html>
+{% load static %}
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!-- jQuery library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<style>
+        footer {
+          padding: 0px 0px 0px 0px;
+          background-color: black;
+          margin: 0px;
+        }
+
+
+        #ftr {
+
+          padding: 20px;
+        }
+
+        .fa {
+
+          font-size: 23px;
+          width: 60px;
+          text-align: center;
+          text-decoration: none;
+          margin: 5px 2px;
+          border-radius: 50%;
+        }
+
+        .fa:hover {
+          opacity: 0.5;
+          text-decoration: none;
+        }
+
+        .fa-facebook {
+          background: #000000;
+          color: #0066ff;
+          margin-top: 30px;
+        }
+        .fa-youtube {
+          background: #000000;
+          color: red;
+        }
+        .fa-github {
+          background: #000000;
+          color: white;
+        }
+        .fa-instagram {
+          background: #000000;
+          color: #ff33cc;
+        }
+
+        p {
+          text-align: center;
+
+        }
+
+</style>
+</head>
+<body>
+
+  <header class="p-3 mb-3 border-bottom" style="height=100">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+          <li><a href="/my-order" class="nav-link px-2 link-body-emphasis">Orders</a></li>
+          <li><a href="/send-feedback" class="nav-link px-2 link-body-emphasis">Send Feedback</a></li>
+          <li><a href="/aboutus" class="nav-link px-2 link-body-emphasis">About Us</a></li>
+        </ul>
+        <a href="/cart" type="button" class="btn btn-secondary" style=" padding-right: 12px; margin-right: 12px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+           <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"></path>
+          </svg><span class="item-number ">{{ product_count_in_cart }}</span>
+        </a>
+
+        <form action="/search" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 w-25" role="search">
+          <input type="search" class="form-control form-control-dark text-bg-light" placeholder="Search for Products, Brands and more" name="query" id="query" aria-label="Search">
+        </form>
+
+        <div class="dropdown text-end">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="data:image/jpeg;base64,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" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small" style="">
+            <li><a class="dropdown-item" href="/my-profile">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" style="background-image: url('https://futuretime.vn/wp-content/uploads/2024/06/M0A10764_6.png');height: 450px">>
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 fw-normal text-white ">ĐỒNG HỒ CHÍNH HÃNG</h1>
+      <p class="lead fw-normal"></p>
+      <a class="btn btn-outline-secondary" href="/">Mua ngay</a>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+  </div>
+<!-- content start-->
+{% block content %}
+
+{% endblock content %}
+<!-- content end-->
+<br><br><br>
+<footer>
+  <p>
+    <a id="ftr" href="#" class="fa fa-facebook"></a>
+    <a id="ftr" href="#" class="fa fa-youtube"></a>
+    <a id="ftr" href="#" class="fa fa-instagram"></a>
+    <a id="ftr" href="#" class="fa fa-github"></a>
+  </p>
+
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div style="color:#ffffff;" class="wow fadeInUp footer-copyright">
+          <p>Made in VietNam<br>  
+            Copyright &copy; by Đồng Hồ Thăng Long® Since 1991 </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+</script>
+
+</body>
+</html>
